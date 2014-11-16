@@ -17,32 +17,21 @@ curl_setopt_array($curl, array(
 			       CURLOPT_RETURNTRANSFER=> 1
 			       ));
 
-// Send the request & save response to $resp
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
-echo '<pre>';
-//var_dump($data->sourceItem[1]->attributes()->sourceAccount);
-var_dump($data);
-foreach($data->sourceItem[1]->attributes() as $d=>$e) {
-  var_dump($d,(string)$e);
-}
-echo '</pre>';
+
 
 $sourceAccount = (string)$data->sourceItem[2]->attributes()->sourceAccount;
 $source = (string)$data->sourceItem[2]->attributes()->source;
 
-echo '<br />';
-
-
+/*
 $postFields = 'source='.urlencode($source).'&sourceAccount='.urlencode($sourceAccount);
 $fields = array('source'=>$source,
 		'sourceAccount'=>$sourceAccount);
 
-//print_r($fields);
 
 $fields = http_build_query($fields);
 
-//print_r($fields);
 
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"></navigate>';
 
@@ -57,9 +46,35 @@ curl_setopt_array($curl,
 			));
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
-echo '<pre>';
-print_r($data->items->item);
-echo '</pre>';
+
+$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
+'.$data->items->item->asXML().'
+</navigate>';
+*/
+
+$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"><item><name>All Music</name><type>dir</type>
+<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="4">
+<itemName>Music</itemName>
+</ContentItem>
+</item></navigate>';
+
+
+$curl = curl_init();
+curl_setopt_array($curl,
+		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
+			CURLOPT_HEADER => 0,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_POST => 1,
+			CURLOPT_POSTFIELDS => $xml_data,
+			CURLOPT_HTTPHEADER => array('Content-type: text/xml')
+			));
+$resp = curl_exec($curl);
+$data = new SimpleXMLElement($resp);
+
+foreach($data->items->item as $item) {
+  echo $item->name;
+}
+
 
 //print_r(curl_getinfo($curl));
 curl_close($curl);
