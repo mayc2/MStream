@@ -56,8 +56,8 @@ $data = new SimpleXMLElement($resp);?>
 <?php
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 <numItems>20</numItems>
-<item><name>All Music</name><type>dir</type>
-<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="4">
+<item><name>Music</name><type>dir</type>
+<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="1">
 <itemName>Music</itemName>
 </ContentItem>
 </item></navigate>';
@@ -85,8 +85,7 @@ foreach($data->items->item as $item) {
 <input type="hidden" name="contentLocation" value="'.$item->ContentItem->attributes()->location.'">
 <input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
 <input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
-<input type="submit" value="Enter '.$item->name.'"></form><br />';
-  echo '<pre>'.print_r($item).'</pre>';
+<input type="submit" value="Browse '.$item->name.'"></form><br />';
 }
 
 //Mike's Code
