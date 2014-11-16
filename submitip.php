@@ -1,12 +1,12 @@
 <?php
 
 session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $_SESSION['ip'] = $_POST['ipaddr'];
 echo $_SESSION['ip'].'<br />';
-/*
-$response = http_get("http://".$_SESSION['ip']."/navigate",array('port'=>8090),$info);
-print_r($info);
-*/
 
 // Get cURL resource
 $curl = curl_init();
@@ -16,15 +16,52 @@ curl_setopt_array($curl, array(
 			       CURLOPT_HEADER => 0,
 			       CURLOPT_RETURNTRANSFER=> 1
 			       ));
+
 // Send the request & save response to $resp
-echo '<br /><pre>';
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
-
-print_r($data);
-
+echo '<pre>';
+//var_dump($data->sourceItem[1]->attributes()->sourceAccount);
+var_dump($data);
+foreach($data->sourceItem[1]->attributes() as $d=>$e) {
+  var_dump($d,(string)$e);
+}
 echo '</pre>';
 
+$sourceAccount = (string)$data->sourceItem[2]->attributes()->sourceAccount;
+$source = (string)$data->sourceItem[2]->attributes()->source;
+
+echo '<br />';
+
+
+$postFields = 'source='.urlencode($source).'&sourceAccount='.urlencode($sourceAccount);
+$fields = array('source'=>$source,
+		'sourceAccount'=>$sourceAccount);
+
+//print_r($fields);
+
+$fields = http_build_query($fields);
+
+//print_r($fields);
+
+$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"></navigate>';
+
+$curl = curl_init();
+curl_setopt_array($curl,
+		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
+			CURLOPT_HEADER => 0,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_POST => 1,
+			CURLOPT_POSTFIELDS => $xml_data,
+			CURLOPT_HTTPHEADER => array('Content-type: text/xml')
+			));
+$resp = curl_exec($curl);
+$data = new SimpleXMLElement($resp);
+echo '<pre>';
+print_r($data->items->item);
+echo '</pre>';
+
+//print_r(curl_getinfo($curl));
 curl_close($curl);
 
 //print_r(file_get_contents("http://128.113.222.71:8080/test.html"));
