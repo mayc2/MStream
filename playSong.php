@@ -13,7 +13,7 @@ $xml_data = '<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'
 <itemName>'.$itemName.'</itemName>
 </ContentItem>';
 
-echo $xml_data;die();
+echo $xml_data;
 
 $curl = curl_init();
 curl_setopt_array($curl,

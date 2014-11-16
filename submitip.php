@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once('mysql.php');
+
 if(!isset($_SESSION['ip']))
   $_SESSION['ip'] = $_POST['ipaddr'];
 echo $_SESSION['ip'].'<br />';
@@ -17,40 +19,24 @@ curl_setopt_array($curl, array(
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
 
-
 $sourceAccount = (string)$data->sourceItem[2]->attributes()->sourceAccount;
 $source = (string)$data->sourceItem[2]->attributes()->source;
 $_SESSION['source'] = $source;
 $_SESSION['sourceAccount'] = $sourceAccount;
-
-/*
-$postFields = 'source='.urlencode($source).'&sourceAccount='.urlencode($sourceAccount);
-$fields = array('source'=>$source,
-		'sourceAccount'=>$sourceAccount);
-
-
-$fields = http_build_query($fields);
-
-
-$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"></navigate>';
+$_SESSION['deviceID'] = $data->attributes()->deviceID;
 
 $curl = curl_init();
-curl_setopt_array($curl,
-		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
-			CURLOPT_HEADER => 0,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_POST => 1,
-			CURLOPT_POSTFIELDS => $xml_data,
-			CURLOPT_HTTPHEADER => array('Content-type: text/xml')
-			));
+curl_setopt_array($curl, array(
+			       CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/now_playing',
+			       CURLOPT_HEADER => 0,
+			       CURLOPT_RETURNTRANSFER => 1
+			       ));
 $resp = curl_exec($curl);
-$data = new SimpleXMLElement($resp);
+$data = new SimpleXMLElement($resp); ?>
 
-$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
-'.$data->items->item->asXML().'
-</navigate>';
-*/
+<h3><?php echo $data->artist; ?> - <?php echo $data->track; ?></h3>
 
+<?php
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 <numItems>20</numItems>
 <item><name>All Music</name><type>dir</type>
@@ -73,17 +59,17 @@ $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
 
 foreach($data->items->item as $item) {
-  echo $item->name;
-  echo '<form method="post" action="playSong.php">
-<input type="hidden" name="itemName" value="'.urlencode($item->ContentItem->itemName).'">
-<input type="hidden" name="location" value="'.$item->ContentItem->attributes()->location.'">
+  $itemName = (string)$item->ContentItem->itemName;
+  $itemNameValue = urlencode($itemName);
+  $location = (string)$item->ContentItem->attributes()->location;
+  echo (string)$item->name;
+
+  echo '<form style="display:inline" method="post" action="playSong.php">
+<input type="hidden" name="itemName" value="'.$itemNameValue.'">
+<input type="hidden" name="location" value="'.$location.'">
 <input type="submit" value="Play Song"></form><br />';
-  
-  echo '<pre>'.print_r($item).'</pre>';
+
+  echo getVotes($conn,$itemName,$location).' [ <a href="vote.php?val=up&itemName='.$itemNameValue.'&location='.urlencode($location).'">+</a> / <a href="vote.php?val=down&itemName='.$itemNameValue.'&location='.urlencode($location).'">-</a> ]<br /><br />';
 }
 
-
-//print_r(curl_getinfo($curl));
 curl_close($curl);
-
-//print_r(file_get_contents("http://128.113.222.71:8080/test.html"));
