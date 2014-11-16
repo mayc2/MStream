@@ -1,11 +1,8 @@
 <?php
-
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$_SESSION['ip'] = $_POST['ipaddr'];
+if(!isset($_SESSION['ip']))
+  $_SESSION['ip'] = $_POST['ipaddr'];
 echo $_SESSION['ip'].'<br />';
 
 // Get cURL resource
@@ -23,6 +20,8 @@ $data = new SimpleXMLElement($resp);
 
 $sourceAccount = (string)$data->sourceItem[2]->attributes()->sourceAccount;
 $source = (string)$data->sourceItem[2]->attributes()->source;
+$_SESSION['source'] = $source;
+$_SESSION['sourceAccount'] = $sourceAccount;
 
 /*
 $postFields = 'source='.urlencode($source).'&sourceAccount='.urlencode($sourceAccount);
@@ -52,7 +51,9 @@ $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 </navigate>';
 */
 
-$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"><item><name>All Music</name><type>dir</type>
+$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
+<numItems>20</numItems>
+<item><name>All Music</name><type>dir</type>
 <ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="4">
 <itemName>Music</itemName>
 </ContentItem>
@@ -73,6 +74,12 @@ $data = new SimpleXMLElement($resp);
 
 foreach($data->items->item as $item) {
   echo $item->name;
+  echo '<form method="post" action="playSong.php">
+<input type="hidden" name="itemName" value="'.urlencode($item->ContentItem->itemName).'">
+<input type="hidden" name="location" value="'.$item->ContentItem->attributes()->location.'">
+<input type="submit" value="Play Song"></form><br />';
+  
+  echo '<pre>'.print_r($item).'</pre>';
 }
 
 
