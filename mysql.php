@@ -24,3 +24,11 @@ function getPopularSongs($conn) {
   $rs = $conn->query("SELECT votes, itemName, location FROM songvotes ORDER BY votes DESC LIMIT 25");
   return $rs;
 }
+
+function getBoo($conn) {
+  $rs = $conn->query("SELECT boos FROM boo");
+  while($row = $rs->fetch_assoc()) {
+    $boos = $row['boos'];
+  }
+  return $boos;
+}

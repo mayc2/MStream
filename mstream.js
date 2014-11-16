@@ -6,17 +6,19 @@ $(document).ready(function() {
 	    dataType : 'json',
 	    success : function(response) {
 		console.log(response);
+		$('#nowPlayingInfo').html(response.artist[0]+' - '+response.track[0]);
 		$.ajax({
 		    url : '/playNewSong.php',
 		    type : 'POST',
-		    data : {data:response},
+		    data : {data:response.xml},
 		    success:function(response) {
-			//location.reload();
+			//console.log(response);
 		    }
 		});
 	    }
 	});
-    },10000);
+    },1000);
+
 
     $('#searchBox').autocomplete({
         source:'/searchSongs.php',

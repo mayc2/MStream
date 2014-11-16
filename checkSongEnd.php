@@ -10,7 +10,15 @@ curl_setopt_array($curl, array(
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
 
-$result = $data->asXML();
+if(isset($data->artist)) {
+  $result['artist'] = $data->artist;
+  $result['track'] = $data->track;
+} else {
+  $result['artist'] = ' ';
+  $result['track'] = ' ';
+}
+
+$result['xml'] = $data->asXML();
 
 header("Content-type: application/json");
 echo json_encode($result);
