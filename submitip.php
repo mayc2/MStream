@@ -53,8 +53,15 @@ $data = new SimpleXMLElement($resp);?>
 
 <br />Now Playing:
 <h3><?php echo $data->artist; ?> - <?php echo $data->track; ?></h3>
+<a href="/boo.php">BOO!</a><br />
 
 <?php
+
+$popularSongs = getPopularSongs($conn);
+while($row = $popularSongs->fetch_assoc()) {
+  echo '[ <a href="/vote.php?val=up&itemName='.urlencode($row['itemName']).'&location='.urlencode($row['location']).'">UP</a> / <a href="/vote.php?val=down&itemName='.urlencode($row['itemName']).'&location='.urlencode($row['location']).'">DOWN</a> ] (' . $row['votes'] . ') '.$row['itemName'] . '<br />';
+}
+
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 <numItems>20</numItems>
 <item><name>Music</name><type>dir</type>
@@ -81,9 +88,9 @@ $data = new SimpleXMLElement($resp);
 foreach($data->items->item as $item) {
   echo urldecode($item->name);
   echo '<form method="post" action="goToDir.php">
-<input type="hidden" name="itemName" value="'.urlencode($item->itemName).'">
+<input type="hidden" name="itemName" value="'.urlencode((string)$item->ContentItem->itemName).'">
 <input type="hidden" name="itemType" value="'.$item->type.'">
-<input type="hidden" name="contentLocation" value="'.$item->ContentItem->attributes()->location.'">
+<input type="hidden" name="contentLocation" value="'.(string)$item->ContentItem->attributes()->location.'">
 <input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
 <input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
 <input type="submit" value="Browse '.$item->name.'"></form><br />';

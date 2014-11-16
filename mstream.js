@@ -6,48 +6,17 @@ $(document).ready(function() {
 	    dataType : 'json',
 	    success : function(response) {
 		console.log(response);
+		$.ajax({
+		    url : '/playNewSong.php',
+		    type : 'POST',
+		    data : {data:response},
+		    success:function(response) {
+			//location.reload();
+		    }
+		});
 	    }
 	});
     },10000);
-
-    /*
-   // Extend the autocomplete widget with a new "suggest" option.
-    $.widget( "app.autocomplete", $.ui.autocomplete, {
-        
-        options: {
-            suggest: false    
-        },
-        
-        // Called when the autocomplete menu is about to be displayed.
-        _suggest: function( items ) {
-            
-            // If there's a "suggest" function, use it to render the
-            // items. Otherwise, use the default _suggest() implementation.
-            if ( $.isFunction( this.options.suggest ) ) {
-                return this.options.suggest( items );
-            }
-            
-            this._super( items );
-            
-        },
-        
-        // Called when the autocomplete menu is about to be hidden.
-        _close: function( e ) {
-        
-            // If there's a "suggest" function, call it with an
-            // empty array so it can clean up. Otherwise, use the
-            // default _close() implementation.
-            if ( $.isFunction( this.options.suggest ) ) {
-                this.options.suggest( [] );
-                return this._trigger( "close", e );
-            }
-            
-            this._super( e )
-            
-        }
-        
-    });
-    */
 
     $('#searchBox').autocomplete({
         source:'/searchSongs.php',
@@ -75,10 +44,11 @@ $(document).ready(function() {
 
 	      select:function(event,ui) {
 		  $.ajax({
-		      url : '/playSong.php',
-		      type : 'POST',
+		      url : '/vote.php',
+		      type : 'GET',
 		      data : {itemName:ui.item.itemName,
-			      location:ui.item.location},
+			      location:ui.item.location,
+			      val:'up'},
 		      success : function(response) {
 			  console.log(response);
 		      }

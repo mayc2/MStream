@@ -18,5 +18,9 @@ function getVotes($conn, $itemName,$location) {
     $conn->query("INSERT INTO songvotes(location,itemName,votes,last_vote) VALUES('".$conn->real_escape_string($location)."', '".$conn->real_escape_string($itemName)."', '0', '0')");
     return 0;
   }
+}
 
+function getPopularSongs($conn) {
+  $rs = $conn->query("SELECT votes, itemName, location FROM songvotes ORDER BY votes DESC LIMIT 25");
+  return $rs;
 }

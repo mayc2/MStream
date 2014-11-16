@@ -23,7 +23,6 @@ $ip = $_SESSION['ip'];
 $sourceAccount = $_SESSION['sourceAccount'];
 $source = $_SESSION['source'];
 
-
 $itemName = urldecode($_POST['itemName']);
 $itemType = $_POST['itemType'];
 $contentLocation = $_POST['contentLocation'];
@@ -37,6 +36,8 @@ $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 </ContentItem>
 </item>
 </navigate>';
+
+echo '<pre>'.$xml_data.'<pre>';
 
 $curl = curl_init();
 curl_setopt_array($curl,
