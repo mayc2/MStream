@@ -3,7 +3,7 @@ session_start();
 
 $curl = curl_init();
 curl_setopt_array($curl, array(
-			       CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/now_playing',
+			       CURLOPT_URL => 'http://'.$_COOKIE['ip'].':8090/now_playing',
 			       CURLOPT_HEADER => 0,
 			       CURLOPT_RETURNTRANSFER => 1
 			       ));
