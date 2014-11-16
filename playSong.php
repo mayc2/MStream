@@ -23,13 +23,7 @@ $xml_data = '<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'
 <itemName>'.$itemName.'</itemName>
 </ContentItem>';
 
-echo $xml_data;//die();
-
-$xml_response = '<item Playable="1"><name>'.$name.'</name><type>dir</type><mediaItemContainer offset="'.$offset.'">
-		<ContentItem source="'.$source.'" location="'.$mediaItemContainerLocation.'" sourceAccount="'.$sourceAccount.'" isPresetable="'.$mIsPresetable.'">
-			<itemName>'.$mItemName.'</itemName>
-		</ContentItem>
-	</mediaItemContainer>';
+echo $xml_data;
 
 $curl = curl_init();
 curl_setopt_array($curl,
