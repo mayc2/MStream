@@ -4,9 +4,9 @@ session_start();
 
 require_once('mysql.php');
 
-$ip = $_SESSION['ip'];
-$sourceAccount = $_SESSION['sourceAccount'];
-$source = $_SESSION['source'];
+$ip = $_COOKIE['ip'];
+$sourceAccount = $_COOKIE['sourceAccount'];
+$source = $_COOKIE['source'];
 
 $itemName = urldecode($_GET['itemName']);
 $location = urldecode($_GET['location']);

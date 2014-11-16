@@ -19,9 +19,9 @@ require_once('mysql.php');
 
 include('search.php');
 
-$ip = $_SESSION['ip'];
-$sourceAccount = $_SESSION['sourceAccount'];
-$source = $_SESSION['source'];
+$ip = $_COOKIE['ip'];
+$sourceAccount = $_COOKIE['sourceAccount'];
+$source = $_COOKIE['source'];
 
 $itemName = urldecode($_POST['itemName']);
 $itemType = $_POST['itemType'];

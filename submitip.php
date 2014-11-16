@@ -19,15 +19,18 @@ require_once('mysql.php');
 
 include('search.php');
 
-if(!isset($_SESSION['ip']))
-  $_SESSION['ip'] = $_POST['ipaddr'];
-echo $_SESSION['ip'].'<br />';
+  $time = time() + 60 * 60 * 24 * 30 ;
+if(!isset($_COOKIE['ip'])) {
+  //$_SESSION['ip'] = $_POST['ipaddr'];
+  setcookie('ip',$_POST['ipaddr'], $time);
+    //echo $_SESSION['ip'].'<br />';
+    }
 
 // Get cURL resource
 $curl = curl_init();
 // Set some options - we are passing in a useragent too here
 curl_setopt_array($curl, array(
-			       CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/sources',
+			       CURLOPT_URL => 'http://'.$_COOKIE['ip'].':8090/sources',
 			       CURLOPT_HEADER => 0,
 			       CURLOPT_RETURNTRANSFER=> 1
 			       ));
@@ -37,14 +40,16 @@ $data = new SimpleXMLElement($resp);
 
 $sourceAccount = (string)$data->sourceItem[2]->attributes()->sourceAccount;
 $source = (string)$data->sourceItem[2]->attributes()->source;
-$_SESSION['source'] = $source;
-$_SESSION['sourceAccount'] = $sourceAccount;
+//$_SESSION['source'] = $source;
+setcookie('source', $source, $time);
+//$_SESSION['sourceAccount'] = $sourceAccount;
+setcookie('sourceAccount', $sourceAccount, $time);
 
 $_SESSION['deviceID'] = $data->attributes()->deviceID;
 
 $curl = curl_init();
 curl_setopt_array($curl, array(
-			       CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/now_playing',
+			       CURLOPT_URL => 'http://'.$_COOKIE['ip'].':8090/now_playing',
 			       CURLOPT_HEADER => 0,
 			       CURLOPT_RETURNTRANSFER => 1
 			       ));
@@ -74,7 +79,7 @@ $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 
 $curl = curl_init();
 curl_setopt_array($curl,
-		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
+		  array(CURLOPT_URL => 'http://'.$_COOKIE['ip'].':8090/navigate',
 			CURLOPT_HEADER => 0,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_POST => 1,
