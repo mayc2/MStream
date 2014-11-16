@@ -23,41 +23,8 @@ $source = (string)$data->sourceItem[2]->attributes()->source;
 $_SESSION['source'] = $source;
 $_SESSION['sourceAccount'] = $sourceAccount;
 
-/*
-$postFields = 'source='.urlencode($source).'&sourceAccount='.urlencode($sourceAccount);
-$fields = array('source'=>$source,
-		'sourceAccount'=>$sourceAccount);
-
-
-$fields = http_build_query($fields);
-
-
-$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'"></navigate>';
-
-$curl = curl_init();
-curl_setopt_array($curl,
-		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
-			CURLOPT_HEADER => 0,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_POST => 1,
-			CURLOPT_POSTFIELDS => $xml_data,
-			CURLOPT_HTTPHEADER => array('Content-type: text/xml')
-			));
-$resp = curl_exec($curl);
-$data = new SimpleXMLElement($resp);
-
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
-'.$data->items->item->asXML().'
 </navigate>';
-*/
-
-$xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
-<numItems>20</numItems>
-<item><name>All Music</name><type>dir</type>
-<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="4">
-<itemName>Music</itemName>
-</ContentItem>
-</item></navigate>';
 
 
 $curl = curl_init();
@@ -73,11 +40,14 @@ $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
 
 foreach($data->items->item as $item) {
-  echo $item->name;
-  echo '<form method="post" action="playSong.php">
-<input type="hidden" name="itemName" value="'.urlencode($item->ContentItem->itemName).'">
-<input type="hidden" name="location" value="'.$item->ContentItem->attributes()->location.'">
-<input type="submit" value="Play Song"></form><br />';
+  echo urldecode($item->name);
+  echo '<form method="post" action="goToDir.php">
+<input type="hidden" name="itemName" value="'.urlencode($item->itemName).'">
+<input type="hidden" name="itemType" value="'.$item->type.'">
+<input type="hidden" name="contentLocation" value="'.$item->ContentItem->attributes()->location.'">
+<input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
+<input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
+<input type="submit" value="Enter '.$item->name.'"></form><br />';
   
   echo '<pre>'.print_r($item).'</pre>';
 }
