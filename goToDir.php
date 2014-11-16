@@ -39,6 +39,7 @@ $data = new SimpleXMLElement($resp);?>
 <h3 id="nowPlayingInfo"><?php echo $data->artist; ?> - <?php echo $data->track; ?></h3>
 <a href="/boo.php"><h4>BOO! (<?php echo getBoo($conn); ?>)</h4></a><br />
 
+<b>Next 25 Songs:</b><br />
 <?php
 
 $popularSongs = getPopularSongs($conn);
