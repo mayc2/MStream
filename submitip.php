@@ -4,6 +4,7 @@ session_start();
 
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <script src="/jquery.min.js"></script>
 <script src="/jquery-ui.min.js"></script>
