@@ -56,6 +56,7 @@ curl_setopt_array($curl, array(
 $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);?>
 
+<div style="width:50%;position:relative;float:left">
 <br />Now Playing:
 <h3><?php echo $data->artist; ?> - <?php echo $data->track; ?></h3>
 <a href="/boo.php">BOO!</a><br />
@@ -67,6 +68,12 @@ while($row = $popularSongs->fetch_assoc()) {
   echo '[ <a href="/vote.php?val=up&itemName='.urlencode($row['itemName']).'&location='.urlencode($row['location']).'">UP</a> / <a href="/vote.php?val=down&itemName='.urlencode($row['itemName']).'&location='.urlencode($row['location']).'">DOWN</a> ] (' . $row['votes'] . ') '.$row['itemName'] . '<br />';
 }
 
+?>
+
+</div>
+<div style="width:49%;position:relative;float:left">
+
+<?php
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 <numItems>20</numItems>
 <item><name>Music</name><type>dir</type>
@@ -120,6 +127,7 @@ foreach($data->items->item as $item) {
 curl_close($curl);
 
 ?>
+</div>
 <div id="results"></div>
 </body>
 </html>
