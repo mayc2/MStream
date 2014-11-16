@@ -72,7 +72,7 @@ $resp = curl_exec($curl);
 $data = new SimpleXMLElement($resp);
 
 foreach($data->items->item as $item) {
-  echo $item->name;
+  echo $item->name. "<br></br>";
 }
 
 
