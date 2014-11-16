@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
 <link rel="stylesheet" href="/style.css" />
