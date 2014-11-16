@@ -5,6 +5,7 @@ session_start();
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
 <link rel="stylesheet" href="/style.css" />
@@ -39,6 +40,7 @@ $data = new SimpleXMLElement($resp);?>
 <h3 id="nowPlayingInfo"><?php echo $data->artist; ?> - <?php echo $data->track; ?></h3>
 <a href="/boo.php"><h4>BOO! (<?php echo getBoo($conn); ?>)</h4></a><br />
 
+<b>Next 25 Songs:</b><br />
 <?php
 
 $popularSongs = getPopularSongs($conn);

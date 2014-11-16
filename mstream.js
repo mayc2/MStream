@@ -6,7 +6,7 @@ $(document).ready(function() {
 	    dataType : 'json',
 	    success : function(response) {
 		console.log(response);
-		$('#nowPlayingInfo').html(response.artist[0]+' - '+response.track[0]);
+		$('#nowPlayingInfo').html(response.artist[0]+' - '+response.track[0]+' ('+response.time+'/'+response.timeTotal+')');
 		$.ajax({
 		    url : '/playNewSong.php',
 		    type : 'POST',
@@ -17,7 +17,7 @@ $(document).ready(function() {
 		});
 	    }
 	});
-    },1000);
+    },15000);
 
 
     $('#searchBox').autocomplete({
