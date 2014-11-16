@@ -40,16 +40,16 @@ foreach($data->items->item as $item) {
   	  echo $item->itemName;
   }
   else{
-  	
+
 	  echo '<form method="post" action="goToDir.php">
 	<input type="hidden" name="itemName" value="'.urlencode($item->itemName).'">
 	<input type="hidden" name="itemType" value="'.$item->type.'">
 	<input type="hidden" name="contentLocation" value="'.$item->ContentItem->attributes()->location.'">
 	<input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
 	<input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
-	<input type="submit" value="Enter '.$item->name.'"></form><br />';
+	<input type="submit" value="Browse '.$item->name.'"></form><br />';
 	  
-	  echo '<pre>'.print_r($item).'</pre>';
+	  //echo '<pre>'.print_r($item).'</pre>';
 	}
 }
 
