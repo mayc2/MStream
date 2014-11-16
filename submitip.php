@@ -87,7 +87,6 @@ foreach($data->items->item as $item) {
 <input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
 <input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
 <input type="submit" value="Enter '.$item->name.'"></form><br />';
-  echo '<pre>'.print_r($item).'</pre>';
 }
 
 //Mike's Code
