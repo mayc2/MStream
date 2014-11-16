@@ -9,11 +9,27 @@ $source = $_SESSION['source'];
 $itemName = urldecode($_POST['itemName']);
 $location = $_POST['location'];
 
+$name = urldecode($_POST['name']);
+$offset = urldecode($_POST['offset']);
+$mediaItemContainerLocation = urldecode($_POST['mediaItemContainerLocation']);
+$mIsPresetable = urldecode($_POST['mIsPresetable']);
+$mItemName = urldecode($_POST['mItemName']);
+$location = urldecode($_POST['location']);
+$isPresetable = urldecode($_POST['isPresetable']);
+$itemName = urldecode($_POST['itemName']);
+
+
 $xml_data = '<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="'.$location.'">
 <itemName>'.$itemName.'</itemName>
 </ContentItem>';
 
-echo $xml_data;die();
+echo $xml_data;//die();
+
+$xml_response = '<item Playable="1"><name>'.$name.'</name><type>dir</type><mediaItemContainer offset="'.$offset.'">
+		<ContentItem source="'.$source.'" location="'.$mediaItemContainerLocation.'" sourceAccount="'.$sourceAccount.'" isPresetable="'.$mIsPresetable.'">
+			<itemName>'.$mItemName.'</itemName>
+		</ContentItem>
+	</mediaItemContainer>';
 
 $curl = curl_init();
 curl_setopt_array($curl,

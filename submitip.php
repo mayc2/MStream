@@ -26,7 +26,6 @@ $_SESSION['sourceAccount'] = $sourceAccount;
 $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 </navigate>';
 
-
 $curl = curl_init();
 curl_setopt_array($curl,
 		  array(CURLOPT_URL => 'http://'.$_SESSION['ip'].':8090/navigate',
@@ -48,11 +47,10 @@ foreach($data->items->item as $item) {
 <input type="hidden" name="contentIsPresentable" value="'.$item->ContentItem->attributes()->isPresentable.'">
 <input type="hidden" name="ContentItemName" value="'.$item->ContentItem->itemName.'">
 <input type="submit" value="Enter '.$item->name.'"></form><br />';
-  
   echo '<pre>'.print_r($item).'</pre>';
 }
 
-
+	
 //print_r(curl_getinfo($curl));
 curl_close($curl);
 
