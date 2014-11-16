@@ -19,9 +19,9 @@ $isPresetable = urldecode($_POST['isPresetable']);
 $itemName = urldecode($_POST['itemName']);
 
 
-$xml_data = '<ContentItem source="'.$source.'" location="'.$location.'" sourceAccount="'.$sourceAccount.'">
-		<itemName>'.$itemName.'</itemName>
-	</ContentItem>';
+$xml_data = '<ContentItem source="'.$source.'" sourceAccount="'.$sourceAccount.'" location="'.$location.'">
+<itemName>'.$itemName.'</itemName>
+</ContentItem>';
 
 echo $xml_data;//die();
 
