@@ -51,6 +51,7 @@ $(document).ready(function() {
 			      val:'up'},
 		      success : function(response) {
 			  console.log(response);
+			  location.reload();
 		      }
 		  });
         },

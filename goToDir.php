@@ -37,8 +37,6 @@ $xml_data = '<navigate source="'.$source.'" sourceAccount="'.$sourceAccount.'">
 </item>
 </navigate>';
 
-echo '<pre>'.$xml_data.'<pre>';
-
 $curl = curl_init();
 curl_setopt_array($curl,
 	array(CURLOPT_URL => 'http://'.$ip.':8090/navigate',
@@ -56,9 +54,13 @@ foreach($data->items->item as $item) {
   echo urldecode($item->name);
   if(strcmp($item->type, "track") == 0){
   	  //echo $item->itemName;
-  	  echo '<form style="display:inline" method="post" action="playSong.php">
-		<input type="hidden" name="itemName" value="'.$itemName.'">
-		<input type="hidden" name="location" value="'.$contentLocation.'">
+    $itemName = (string)$item->ContentItem->itemName;
+    $itemNameValue = urlencode($itemName);
+    $location = (string)$item->ContentItem->attributes()->location;
+    echo (string)$item->name;
+    echo '<form style="display:inline" method="post" action="playSong.php">
+		<input type="hidden" name="itemName" value="'.$item->ContentItem->itemName.'">
+		<input type="hidden" name="location" value="'.$item->ContentItem->attributes()->location.'">
 		<input type="submit" value="Play Song"></form><br />';
 
  		echo getVotes($conn,$itemName,$location).' [ <a href="vote.php?val=up&itemName='.$itemNameValue.'&location='.urlencode($location).'">+</a> / <a href="vote.php?val=down&itemName='.$itemNameValue.'&location='.urlencode($location).'">-</a> ]<br /><br />';
