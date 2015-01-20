@@ -1,12 +1,21 @@
 <!DOCTYPE HTML>
-<HTML>
+<html>
 
-    <HEAD>
-        <meta charset="utf-8"/>
-        <TITLE>MStream - Home Page</TITLE>
-    </HEAD>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="images/favicon.png">
+        <title>MStream - Home Page</title>
+    </head>
 
-    <BODY>
+    <body>
+        <div id="header"><img src="images/banner1.png"></div>
 
-    </BODY>
-</HTML>
+        <div id="login">
+            <form name="ipAddr" method="post" action="submitip.php" class="form-inline">
+                <input type="text" name="ipaddr" class="form-control" placeholder="Enter device IP...">
+                <input type="submit" value="Add Device" class="form-control">
+            </form>
+        </div>
+
+    </body>
+</html>
