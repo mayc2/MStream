@@ -11,9 +11,11 @@
         <div id="header"><img src="images/banner1.png"></div>
 
         <div id="login">
-            <form name="ipAddr" method="post" action="submitip.php" class="form-inline">
-                <input type="text" name="ipaddr" class="form-control" placeholder="Enter device IP...">
-                <input type="submit" value="Add Device" class="form-control">
+            <form name="account_info" method="post" action="submit_account_info.html" class="form-inline">
+                <label for="Username">Username</label><input type="text" name="Username" id="Username" class="form-control" placeholder="Enter Username...">
+                <br>
+                <label for="Password">Password</label><input type="text" name="Password" id="Password" class="form-control" placeholder="Enter Password...">
+                <input type="submit" value="Login" class="form-control">
             </form>
         </div>
 
