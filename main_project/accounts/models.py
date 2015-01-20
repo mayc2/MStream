@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
+'''class UserProfile(models.Model):
     #Note: this is required to link UserProfile to a User model instance
     user = models.OneToOneField(User)
 
@@ -11,4 +11,4 @@ class UserProfile(models.Model):
     # Override unicode method
     def __unicode__(self):
         return self.user.username
-
+'''
