@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <!--<script src="jquery.min.js"></script> No present need-->
+    </head>
+    <body>
+        <!--<script> // Soundcloud - Occasional Bad Gateway?
+            var xhr = new XMLHttpRequest();
+            var stream = new Audio();
+            var client_id = "?client_id=4f136aa28db3c9dfec60b81a04066d9e";
+            var client_secret = "?client_secret=405c5931fe9906101cbf74a8524e6d1e";
+            xhr.open('GET', 'http://api.soundcloud.com/tracks/293.json' + client_id, true);
+            xhr.onload = function() {
+                var track = JSON.parse(xhr.responseText);
+                console.log(track);
+                stream.src = track.stream_url + client_id;
+                stream.play();
+            };
+            xhr.send();
+        </script>-->
+
+        <!--<script> // Spotify - Can only play 30s preview
+            var xhr = new XMLHttpRequest();
+            var stream = new Audio();
+            xhr.open('GET', 'Https://api.spotify.com/v1/tracks/1zHlj4dQ8ZAtrayhuDDmkY', true);
+            xhr.onload = function() {
+                var track = JSON.parse(xhr.responseText);
+                console.log(track);
+                stream.src = track.preview_url;
+                stream.play();
+            }
+            xhr.send();
+        </script>-->
+
+        <!-- YouTube - Some issues with the html play button -->
+        <script src="swfobject.js"></script>
+        <div id="ytapiplayer">
+            You need Flash player 8+ and JavaScript enabled to view this video.
+        </div>
+        <button onclick="play()">Play!</button>
+        <script>
+            var params = { allowScriptAccess: "always" };
+            var atts = { id: "myytplayer" };
+            swfobject.embedSWF("http://www.youtube.com/v/o0u4M6vppCI?enablejsapi=1&playerapiid=ytplayer&version=3",
+                       "ytapiplayer", "425", "356", "8", null, null, params, atts);
+            function onYouTubePlayerReady(playerId) {
+                ytplayer = document.getElementById("myytplayer");
+            }
+            function play() {
+                if (ytplayer) {
+                    ytplayer.playVideo();
+                }
+            }
+        </script>
+    </body>
+</html>
